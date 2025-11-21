@@ -2,39 +2,41 @@ name: Lab CI (Unit + E2E)
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
 
       - name: Install Unit Dependencies
-      run: npm install
-      working-directory: ./unit-integration-tests
+        run: npm install
+        working-directory: ./unit-integration-tests
 
-    - name: Run Unit Tests
-      run: npm test
-      working-directory: ./unit-integration-tests
+      - name: Run Unit Tests
+        run: npm test
+        working-directory: ./unit-integration-tests
 
-    - name: Install E2E Dependencies
-      run: npm install
-      working-directory: ./e2e-screenshot-tests
+      - name: Install E2E Dependencies
+        run: npm install
+        working-directory: ./e2e-screenshot-tests
 
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-      working-directory: ./e2e-screenshot-tests
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+        working-directory: ./e2e-screenshot-tests
 
-    - name: Run E2E Tests
-      run: npm test
-      working-directory: ./e2e-screenshot-tests
+      - name: Run E2E Tests
+        run: npm test
+        working-directory: ./e2e-screenshot-tests
