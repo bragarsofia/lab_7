@@ -1,15 +1,13 @@
-name: Lab CI
+name: Lab CI (Unit + E2E)
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,11 +19,22 @@ jobs:
       with:
         node-version: '20.x'
 
-    - name: Install dependencies
+      - name: Install Unit Dependencies
       run: npm install
+      working-directory: ./unit-integration-tests
+
+    - name: Run Unit Tests
+      run: npm test
+      working-directory: ./unit-integration-tests
+
+    - name: Install E2E Dependencies
+      run: npm install
+      working-directory: ./e2e-screenshot-tests
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+      working-directory: ./e2e-screenshot-tests
 
-    - name: Run tests
+    - name: Run E2E Tests
       run: npm test
+      working-directory: ./e2e-screenshot-tests
