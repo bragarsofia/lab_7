@@ -37,6 +37,6 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./e2e-screenshot-tests
 
-        - name: Run E2E Logic Tests Only
+      - name: Run E2E Logic Tests Only
         run: npx playwright test tests/e2e
         working-directory: ./e2e-screenshot-tests
